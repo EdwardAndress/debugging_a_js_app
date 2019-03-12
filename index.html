@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Getting visibility and following the flow in JavaScript</title>
+    <link rel='stylesheet' href='style.css'>
+  </head>
+  <body>
+    <div id='container'>
+      <div id='question-text'></div>
+      <form onsubmit="submitAnswer(event)" id='form'>
+        <input type="text" name="answer" id='answer'  placeholder="Answer">
+        <input type="submit" value="Submit" id='submit'>
+      </form>
+      <div id='feedback'>
+      </div>
+      <div id='score'>
+        Current score: 0
+      </div>
+    </div>
+  </body>
+  <script src="quiz.js"></script>
+  <script src="index.js"></script>
+</html>

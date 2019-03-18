@@ -1,26 +1,57 @@
-var questionIndex;
 var quiz;
 
 window.onload = function() {
-  questionIndex = 0;
+  form = document.getElementById('form')
+  form.addEventListener('submit', submitAnswer)
   quiz = new Quiz();
-  quiz.showQuestion(questionIndex)
+  showQuestion(quiz.nextQuestion())
 }
 
-submitAnswer = function(event) {
+var submitAnswer = function(event) {
   event.preventDefault();
 
   answerInput = document.getElementById('answer')
-  answer = answerInput.value
+  answer = answerInput.value.toLowerCase().trim()
 
   if (answer) {
-    quiz.checkAnswer(answer, questionIndex)
+    showFeedback(answer)
     proceed()
   }
 }
 
-proceed = function() {
-  questionIndex += 1
+var showFeedback = function(userAnswer) {
+  var feedbackBox = document.getElementById('feedback')
+
+  if (quiz.checkAnswer(userAnswer)) {
+    feedbackBox.innerText = "CORRECT!!"
+    updateScore();
+  } else {
+    feedbackBox.innerText = "INCORRECT!!  The answer to the last question was " // + correctAnswer.toUpperCase()
+  }
+}
+
+ var updateScore = function(final = false) {
+  scoreBox = document.getElementById('score')
+  if (final) {
+    scoreBox.innerText = "Final score: " + quiz._score
+  } else {
+    scoreBox.innerText = "Current score: " + quiz._score
+  }
+}
+
+var proceed = function() {
   answerInput.value = ""
-  quiz.showQuestion(questionIndex)
+  question = quiz.nextQuestion()
+  if (question) {
+    showQuestion(quiz.nextQuestion())
+  } else {
+    updateScore(true)
+    submitButton = document.getElementById('submit')
+    submitButton.remove()
+  }
+}
+
+var showQuestion = function(questionText) {
+  questionBox = document.getElementById('question-text');
+  questionBox.innerText = questionText;
 }

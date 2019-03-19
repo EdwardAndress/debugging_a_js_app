@@ -18,7 +18,7 @@ function Quiz() {
 
 Quiz.prototype.nextQuestion = function() {
   if (this.questionIndex <= 3) {
-    return(this._questions[this.questionIndex].text)
+    return(this._questions[this.questionIndex])
   }
 }
 
@@ -27,8 +27,8 @@ Quiz.prototype.checkAnswer = function(userAnswer) {
   this.questionIndex += 1;
   if(userAnswer == question.answer) {
     this._score += 1;
-    return true
+    return { outcome: 'correct' }
   } else {
-    return false
+    return { outcome: 'incorrect', correctAnswer: question.answer }
   }
 }

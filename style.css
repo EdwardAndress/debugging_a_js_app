@@ -10,7 +10,7 @@ body {
   padding: 1em;
 }
 
-#score {
+#scoreContainer {
   border-radius: 5px;
   padding: 2em;
   background-color: #8bb1ef;

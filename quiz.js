@@ -1,5 +1,5 @@
 function Quiz() {
-    this.questionIndex = 0;
+    this._questionIndex = 0;
     this._score = 0
     this._questions = [
       { text: "Complete the British Value:\nThe Rule of ...", answer: "law" },
@@ -17,14 +17,14 @@ function Quiz() {
 };
 
 Quiz.prototype.nextQuestion = function() {
-  if (this.questionIndex <= 3) {
-    return(this._questions[this.questionIndex])
+  if (this._questionIndex <= 3) {
+    return(this._questions[this._questionIndex])
   }
 }
 
 Quiz.prototype.checkAnswer = function(userAnswer) {
-  var question = this._questions[this.questionIndex]
-  this.questionIndex += 1;
+  var question = this._questions[this._questionIndex]
+  this._questionIndex += 1;
   if(userAnswer == question.answer) {
     this._score += 1;
     return { outcome: 'correct' }

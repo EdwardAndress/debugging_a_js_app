@@ -8,40 +8,39 @@ QuizController.prototype.showQuestion = function(questionText) {
     questionText = this.quiz.nextQuestion().text
   }
 
-  this.view.showQuestion(questionText);
+  this.view.update({ question: questionText });
 }
 
 QuizController.prototype.proceed = function() {
-  this.view.clearInput();
+  this.view.update({ clearInput: true });
   question = this.quiz.nextQuestion()
   if (question) {
     this.showQuestion(question.text)
   } else {
-    this.view.updateScore(this.quiz._score, true)
-    this.view.endGame();
+    this.view.update({ endGame: true, score: this.quiz._score })
   }
 }
 
-QuizController.prototype.showFeedback = function(userAnswer) {
+QuizController.prototype.checkAnswer = function(userAnswer) {
   var feedback = this.quiz.checkAnswer(userAnswer)
 
   if (feedback.outcome == 'correct') {
-    this.view.updateScore(this.quiz._score);
+    this.view.update({ score: this.quiz._score });
   }
 
-  this.view.showFeedback(feedback)
+  this.view.update({ feedback: feedback })
 }
 
 QuizController.prototype.addSubmitListener = function(form) {
-  var controller = this;
+  var that = this;
   var submitAnswer = function(event) {
     event.preventDefault();
 
-    answer = controller.view.getAnswer();
+    answer = that.view.getAnswer();
 
     if (answer) {
-      controller.showFeedback(answer)
-      controller.proceed()
+      that.checkAnswer(answer)
+      that.proceed()
     }
   }
 

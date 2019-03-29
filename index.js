@@ -1,20 +1,9 @@
-var quizController;
-
 window.onload = function() {
-  quizController = new QuizController()
-  form = document.getElementById('form')
-  form.addEventListener('submit', submitAnswer)
-  quizController.showQuestion()
-}
+  var quiz = new Quiz();
+  var view = new View();
+  var quizController = new QuizController(quiz, view);
+  var form = document.getElementById('form');
 
-var submitAnswer = function(event) {
-  event.preventDefault();
-
-  answerInput = document.getElementById('answer')
-  answer = answerInput.value.toLowerCase().trim()
-
-  if (answer) {
-    quizController.showFeedback(answer)
-    quizController.proceed()
-  }
+  quizController.showQuestion();
+  quizController.addSubmitListener(form);
 }

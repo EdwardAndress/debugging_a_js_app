@@ -10,27 +10,12 @@ QuizController.prototype.setup = function() {
 
 QuizController.prototype.showQuestion = function() {
   question = this.quiz.nextQuestion()
-  this.view.update({ question: question });
-}
-
-QuizController.prototype.proceed = function() {
-  this.view.update({ clearInput: true });
-
-  if (this.quiz.nextQuestion()) {
-    this.showQuestion()
-  } else {
-    this.view.update({ endGame: true, score: this.quiz._score })
-  }
+  this.view.render(this.quiz);
 }
 
 QuizController.prototype.checkAnswer = function(userAnswer) {
-  var feedback = this.quiz.checkAnswer(userAnswer)
-
-  if (feedback.outcome == 'correct') {
-    this.view.update({ score: this.quiz._score });
-  }
-
-  this.view.update({ feedback: feedback })
+  this.quiz.checkAnswer(userAnswer)
+  this.view.render(this.quiz)
 }
 
 QuizController.prototype.addSubmitListener = function(form) {
@@ -42,7 +27,6 @@ QuizController.prototype.addSubmitListener = function(form) {
 
     if (answer) {
       that.checkAnswer(answer)
-      that.proceed()
     }
   }
 

@@ -16,10 +16,12 @@ View.prototype.getAnswer = function() {
   return this.input.value.toLowerCase().trim()
 }
 
-View.prototype.showFeedback = function(feedback) {
-  if(feedback.outcome.match(/incorrect/)) {
-    this.feedbackBox.innerText = "INCORRECT!!  The answer to the last question was " + feedback.correctAnswer
-  } else if(feedback.outcome.match(/correct/)) {
+View.prototype.showPreviousOutcome = function(object) {
+  if(object.outcome == undefined) {
+    this.feedbackBox.innerText = ""
+  } else if(object.outcome.match(/incorrect/)) {
+    this.feedbackBox.innerText = "INCORRECT!!  The answer to the last question was " + object.correctAnswer
+  } else if(object.outcome.match(/correct/)) {
     this.feedbackBox.innerText = "CORRECT!!"
   } else {
     console.error('INVALID OUTCOME');
@@ -34,8 +36,8 @@ View.prototype.updateScoreContainerH = function() {
   this.scoreContainerH.innerText = "Final score"
 }
 
-View.prototype.showQuestion = function(questionText) {
-  this.questionBox.innerText = questionText;
+View.prototype.showQuestion = function(question) {
+  this.questionBox.innerText = question.text;
 }
 
 View.prototype.endGame = function() {
@@ -44,28 +46,13 @@ View.prototype.endGame = function() {
   this.submitButton.remove()
 }
 
-View.prototype.update = function(object) {
-  if(object.score) {
-    this.updateScore(object.score)
-  }
+View.prototype.render = function(quiz) {
+  this.updateScore(quiz.score)
+  this.showPreviousOutcome(quiz.previousOutcome)
+  this.clearInput()
+  this.showQuestion(quiz.nextQuestion())
 
-  if(object.feedback) {
-    this.showFeedback(object.feedback)
-  }
-
-  if(object.nextQuestion) {
-    this.showQuestion(object.nextQuestion)
-  }
-
-  if(object.endGame) {
+  if(quiz.gameOver) {
     this.endGame()
-  }
-
-  if(object.clearInput) {
-    this.clearInput()
-  }
-
-  if(object.question) {
-    this.showQuestion(object.question.text)
   }
 }

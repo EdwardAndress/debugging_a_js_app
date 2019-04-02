@@ -1,6 +1,8 @@
 function Quiz() {
+    this.previousOutcome = {};
     this._questionIndex = 0;
-    this._score = 0
+    this.gameOver = false;
+    this.score = 0
     this._questions = [
       { text: "Complete the British Value:\nThe Rule of ...", answer: "law" },
       {
@@ -19,6 +21,9 @@ function Quiz() {
 Quiz.prototype.nextQuestion = function() {
   if (this._questionIndex <= 3) {
     return(this._questions[this._questionIndex])
+  } else {
+    this.gameOver = true
+    return({text: "Game over"})
   }
 }
 
@@ -26,9 +31,9 @@ Quiz.prototype.checkAnswer = function(userAnswer) {
   var question = this._questions[this._questionIndex]
   this._questionIndex += 1;
   if(userAnswer == question.answer) {
-    this._score += 1;
-    return { outcome: 'correct' }
+    this.score += 1;
+    this.previousOutcome = { outcome: 'correct' }
   } else {
-    return { outcome: 'incorrect', correctAnswer: question.answer }
+    this.previousOutcome = { outcome: 'incorrect', correctAnswer: question.answer }
   }
 }

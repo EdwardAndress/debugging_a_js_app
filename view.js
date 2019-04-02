@@ -5,6 +5,7 @@ function View() {
   this.scoreContainerH = document.getElementById('scoreContainerH')
   this.scoreBox = document.getElementById('score')
   this.input = document.getElementById('answer')
+  this.form = document.getElementById('form');
 };
 
 View.prototype.updateScore = function(score) {
@@ -65,6 +66,6 @@ View.prototype.update = function(object) {
   }
 
   if(object.question) {
-    this.showQuestion(object.question)
+    this.showQuestion(object.question.text)
   }
 }

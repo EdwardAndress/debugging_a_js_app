@@ -3,19 +3,21 @@ function QuizController(quiz, view) {
   this.view = view;
 };
 
-QuizController.prototype.showQuestion = function(questionText) {
-  if(!questionText) {
-    questionText = this.quiz.nextQuestion().text
-  }
+QuizController.prototype.setup = function() {
+  this.showQuestion();
+  this.addSubmitListener(this.view.form);
+}
 
-  this.view.update({ question: questionText });
+QuizController.prototype.showQuestion = function() {
+  question = this.quiz.nextQuestion()
+  this.view.update({ question: question });
 }
 
 QuizController.prototype.proceed = function() {
   this.view.update({ clearInput: true });
-  question = this.quiz.nextQuestion()
-  if (question) {
-    this.showQuestion(question.text)
+
+  if (this.quiz.nextQuestion()) {
+    this.showQuestion()
   } else {
     this.view.update({ endGame: true, score: this.quiz._score })
   }

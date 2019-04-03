@@ -50,7 +50,7 @@ View.prototype.render = function(quiz) {
   this.updateScore(quiz.score)
   this.showPreviousOutcome(quiz.previousOutcome)
   this.clearInput()
-  this.showQuestion(quiz.nextQuestion())
+  this.showQuestion(quiz.currentQuestion())
 
   if(quiz.gameOver) {
     this.endGame()

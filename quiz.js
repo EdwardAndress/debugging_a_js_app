@@ -18,7 +18,7 @@ function Quiz() {
     ]
 };
 
-Quiz.prototype.nextQuestion = function() {
+Quiz.prototype.currentQuestion = function() {
   if (this._questionIndex <= 3) {
     return(this._questions[this._questionIndex])
   } else {
@@ -28,12 +28,12 @@ Quiz.prototype.nextQuestion = function() {
 }
 
 Quiz.prototype.checkAnswer = function(userAnswer) {
-  var question = this._questions[this._questionIndex]
-  this._questionIndex += 1;
+  var question = this.currentQuestion()
   if(userAnswer == question.answer) {
     this.score += 1;
     this.previousOutcome = { outcome: 'correct' }
   } else {
     this.previousOutcome = { outcome: 'incorrect', correctAnswer: question.answer }
   }
+  this._questionIndex += 1;
 }

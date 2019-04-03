@@ -9,7 +9,6 @@ QuizController.prototype.setup = function() {
 }
 
 QuizController.prototype.showQuestion = function() {
-  question = this.quiz.nextQuestion()
   this.view.render(this.quiz);
 }
 
